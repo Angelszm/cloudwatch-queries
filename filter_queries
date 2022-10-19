@@ -1,0 +1,21 @@
+fields @timestamp, userId as UserID, title as Title_Message, @message
+ | filter ispresent(userId)
+ | filter @message like /INFO/
+ | sort @timestamp desc
+ | limit 10000
+
+
+
+fields @timestamp, @message
+ | filter @message like /ERROR/
+ | sort @timestamp desc
+ | limit 10000
+
+
+ fields @timestamp, @message | filter @message like /ERROR/ | sort @timestamp desc | limit 10000
+
+
+fields @timestamp, @message
+| filter @message like /ERROR|STATEMENT/
+| sort @timestamp desc
+| limit 20
