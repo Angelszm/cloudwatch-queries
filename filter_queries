@@ -19,3 +19,10 @@ fields @timestamp, @message
 | filter @message like /ERROR|STATEMENT/
 | sort @timestamp desc
 | limit 20
+
+
+
+fields @timestamp, topicName, logLevel
+| stats count(*) as numPublishIn by (logLevel="ERROR")
+| sort numPublishIn desc
+| limit 1000
