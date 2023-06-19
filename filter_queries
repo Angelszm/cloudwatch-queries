@@ -26,3 +26,11 @@ fields @timestamp, topicName, logLevel
 | stats count(*) as numPublishIn by (logLevel="ERROR")
 | sort numPublishIn desc
 | limit 1000
+
+
+AppMesh Cloudwatch Query
+- To get envoyOriginalPath, ResponseCode, and Total Count of responseCode
+parse @message '[*] "* * *" * * * * * * "*" "*" "*" "*" "*"' as startTime, method, envoyOriginalPath, protocol, responseCode, responseFlags, bytesReceived, bytesSent, duration, upstreamServiceTime, xForwardedFor, userAgent, requestId, host, upstreamHost
+| sort startTime desc
+| filter envoyOriginalPath like /^(?!\s*$).+/
+| stats count(responseCode) by envoyOriginalPath, responseCode
